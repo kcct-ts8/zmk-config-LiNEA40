@@ -57,7 +57,7 @@
         layers = <SCROLL>;
         input-processors =
             <&zip_xy_transform INPUT_TRANSFORM_Y_INVERT>,
-            //スクロール方向を逆転,,,,,,,
+            //スクロール方向を逆転,,,,,,,,
             <&zip_xy_to_scroll_mapper>;
     };
 };
@@ -67,7 +67,7 @@
         compatible = "zmk,combos";
 
         ZenkakuHankaku {
-            bindings = <&kp GRAVE>;
+            bindings = <&kp LANGUAGE_5>;
             key-positions = <11 12>;
         };
 
@@ -105,6 +105,16 @@
             bindings = <&caps_word>;
             key-positions = <10 1 21 22>;
         };
+
+        english {
+            bindings = <&kp LANGUAGE_1>;
+            key-positions = <12 13>;
+        };
+
+        japanese {
+            bindings = <&kp LANGUAGE_2>;
+            key-positions = <16 17>;
+        };
     };
 
     behaviors {
@@ -141,10 +151,10 @@
 
         MOUSE {
             bindings = <
-&trans  &trans  &trans  &trans  &trans                    &trans  &trans            &mkp MCLK         &trans           &trans
-&trans  &trans  &trans  &trans  &trans                    &trans  &mkp MB1          &msc MOVE_Y(15)   &mkp RCLK        &trans
-&trans  &trans  &trans  &trans  &trans                    &trans  &msc MOVE_X(-15)  &msc MOVE_Y(-15)  &msc MOVE_X(15)  &trans
-&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans                    &trans            &trans           &trans
+&trans  &trans  &trans  &trans  &trans                    &trans  &trans    &none   &trans  &trans
+&trans  &trans  &trans  &trans  &trans                    &trans  &mkp MB1  &none   &none   &trans
+&trans  &trans  &trans  &trans  &trans                    &trans  &none     &none   &none   &trans
+&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans            &trans  &trans  &trans
             >;
         };
 
@@ -152,10 +162,10 @@
 
         MARK {
             bindings = <
-&kp EXCLAMATION             &kp AT           &kp HASH         &kp DOLLAR     &kp PERCENT                      &kp CARET      &kp AMPERSAND  &kp ASTERISK           &kp LEFT_PARENTHESIS  &kp LBKT
-&kp SLASH                   &kp KP_NUMBER_4  &kp DELETE       &kp SEMICOLON  &kp SEMICOLON                    &kp BACKSPACE  &kp LS(LBKT)   &kp RIGHT_BRACKET      &kp BACKSLASH         &kp EQUAL
-&mt LEFT_SHIFT KP_NUMBER_0  &kp KP_NUMBER_1  &kp KP_NUMBER_2  &kp APOS       &kp SQT                          &kp KP_EQUAL   &kp INT3       &kp LS(RIGHT_BRACKET)  &kp LS(BACKSLASH)     &kp LS(INT1)
-&trans                      &trans           &trans           &trans         &trans         &trans    &trans  &trans                        &kp ASTERISK           &kp LEFT_PARENTHESIS  &kp LS(QUESTION)
+&kp EXCLAMATION             &kp DOUBLE_QUOTES  &kp HASH         &kp DOLLAR     &kp PERCENT                      &kp AMPERSAND  &kp SINGLE_QUOTE  &kp MINUS              &kp TILDE             &kp INT_YEN
+&kp SLASH                   &kp KP_NUMBER_4    &kp DELETE       &kp SEMICOLON  &kp SEMICOLON                    &kp BACKSPACE  &kp PLUS          &kp ASTERISK           &kp AT_SIGN           &kp EQUAL
+&mt LEFT_SHIFT KP_NUMBER_0  &kp KP_NUMBER_1    &kp KP_NUMBER_2  &kp APOS       &kp SQT                          &kp KP_EQUAL   &kp INT3          &kp LS(RIGHT_BRACKET)  &kp QUESTION          &kp UNDERSCORE
+&trans                      &trans             &trans           &trans         &trans         &trans    &trans  &trans                           &kp ASTERISK           &kp LEFT_PARENTHESIS  &kp LS(QUESTION)
             >;
 
             sensor-bindings = <&re_kp C_VOLUME_DOWN C_VOLUME_UP>;
