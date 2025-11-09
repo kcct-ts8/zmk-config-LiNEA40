@@ -170,7 +170,12 @@
           wait-ms = <40>; tap-ms = <40>;
           bindings = <&kp LS(LG(RIGHT))>, <&kp DELETE>;
         };
-
+        andr_ping: andr_ping {
+          compatible = "zmk,behavior-macro";
+          #binding-cells = <0>;
+          wait-ms = <20>; tap-ms = <20>;
+          bindings = <&kp A>, <&kp N>, <&kp D>, <&kp R>;
+        };
         // --- OS/BT同時切替（例：7=iOS, 8=Android, 9=Mac） ---
         to_mac: to_mac  { bindings = <&bt BT_SEL 0>, <&to L_MAC>;  };
         to_ios: to_ios  { bindings = <&bt BT_SEL 1>, <&to L_IOS>;  };
@@ -386,7 +391,7 @@
           android_layer {
             // L_ANDR = 8
             bindings = <
-                &trans  &trans  &c_e_andr  &trans  &trans                     &trans  &trans  &trans       &trans  &trans
+                &trans  &trans  &c_e_andr  &trans  &trans                     &trans  &trans  &trans       &trans  &andr_ping
                 &c_a_andr  &trans  &m_d_andr  &m_f_andr  &trans                   &trans  &trans  &c_k_andr    &trans  &trans/* ← c_d_andr を m_d_andr に変更 */
                 &trans  &trans  &trans      &trans  &m_b_andr                    &trans  &trans  &trans       &trans  &trans
                 &trans  &trans  &trans      &trans  &trans    &trans  &trans  &trans          &trans       &trans  &c_sls_andr
