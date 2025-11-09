@@ -338,7 +338,8 @@
             // L_ANDR = 8
             bindings = <
                 &trans  &trans  &c_e_andr  &trans  &trans                        &trans  &trans  &trans       &trans  &trans
-                &c_a_andr &trans &c_d_andr  &trans  &trans                        &trans  &trans  &c_k_andr     &trans  &trans
+                //&c_a_andr &trans &c_d_andr  &trans  &trans                        &trans  &trans  &c_k_andr     &trans  &trans
+                &c_a_andr  &trans  &m_d_andr  &trans  &trans   /* ← c_d_andr を m_d_andr に変更 */
                 &trans  &trans  &trans      &trans  &trans                        &trans  &trans  &trans        &trans  &trans
                 &trans  &trans  &trans      &trans  &trans    &trans   &trans     &trans             &trans     &trans  &c_sls_andr
             >;
