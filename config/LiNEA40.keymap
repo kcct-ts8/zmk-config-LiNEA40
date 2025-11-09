@@ -150,6 +150,11 @@
        // まずは Ctrl+Delete（非対応アプリがあれば選択→Deleteに切替）
        bindings = <&kp LC(DELETE)>;
      };
+        macro_andr_kill: macro_andr_kill {
+          compatible = "zmk,behavior-macro"; #binding-cells=<0>;
+          wait-ms=<40>; tap-ms=<40>;
+          bindings = <&kp LS(LG(RIGHT))>, <&kp DELETE>; /* Shift+Meta+→ → Del */
+        };
 
         // --- OS/BT同時切替（例：7=iOS, 8=Android, 9=Mac） ---
         to_mac: to_mac  { bindings = <&bt BT_SEL 0>, <&to L_MAC>;  };
@@ -189,12 +194,31 @@
          c_sls_ios: c_sls_ios { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>;bindings = <&kp SLASH>, <&kp LG(Z)>; mods = <(MOD_LCTL|MOD_RCTL)>; }; // Undo
     
          /* --- Android: Home/End と Ctrl 系で意味を再現 --- */
-         c_a_andr: c_a_andr { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>;bindings = <&kp A>, <&kp HOME>;    mods = <(MOD_LCTL|MOD_RCTL)>; };
-         c_e_andr: c_e_andr { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>;bindings = <&kp E>, <&kp END>;     mods = <(MOD_LCTL|MOD_RCTL)>; };
-         m_b_andr: m_b_andr { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>;bindings = <&kp B>, <&kp LC(LEFT)>;  mods = <(MOD_LALT|MOD_RALT)>; };
-         m_f_andr: m_f_andr { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>;bindings = <&kp F>, <&kp LC(RIGHT)>; mods = <(MOD_LALT|MOD_RALT)>; };
-         c_d_andr: c_d_andr { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>;bindings = <&kp D>, <&kp DELETE>;  mods = <(MOD_LCTL|MOD_RCTL)>; };
-         c_k_andr: c_k_andr { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>;bindings = <&kp K>, <&em_kill_eol_andr>; mods = <(MOD_LCTL|MOD_RCTL)>; };
+        /* --- Android: 受理されやすい代替 --- */
+        c_a_andr: c_a_andr { compatible = "zmk,behavior-mod-morph"; #binding-cells=<0>;
+          bindings = <&kp A>, <&kp LG(LEFT)>;  /* Meta+← = 行頭 */
+          mods = <(MOD_LCTL|MOD_RCTL)>;
+        };
+        c_e_andr: c_e_andr { compatible = "zmk,behavior-mod-morph"; #binding-cells=<0>;
+          bindings = <&kp E>, <&kp LG(RIGHT)>; /* Meta+→ = 行末 */
+          mods = <(MOD_LCTL|MOD_RCTL)>;
+        };
+        /* 単語移動は Alt に寄せる方が効くアプリが多い */
+        m_b_andr: m_b_andr { compatible="zmk,behavior-mod-morph"; #binding-cells=<0>;
+          bindings = <&kp B>, <&kp LA(LEFT)>;
+          mods = <(MOD_LALT|MOD_RALT)>;
+        };
+        m_f_andr: m_f_andr { compatible="zmk,behavior-mod-morph"; #binding-cells=<0>;
+          bindings = <&kp F>, <&kp LA(RIGHT)>;
+          mods = <(MOD_LALT|MOD_RALT)>;
+        };
+        /* C-k: Shift+Meta+→ → Delete に変更（Endが無視される対策） */
+        c_k_andr: c_k_andr { compatible="zmk,behavior-mod-morph"; #binding-cells=<0>;
+          bindings = <&kp K>, <&macro_andr_kill>; /* 下のマクロを新設 */
+          mods = <(MOD_LCTL|MOD_RCTL)>;
+        };
+        /* C-d/M-d/C-y などはそのままでOKなことが多いが、効かないアプリがあれば選択→Delete 方式へ */
+
          m_d_andr: m_d_andr { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>;bindings = <&kp D>, <&em_del_word_fwd_andr>; mods = <(MOD_LALT|MOD_RALT)>; };
          c_y_andr: c_y_andr { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>;bindings = <&kp Y>, <&kp LC(V)>;   mods = <(MOD_LCTL|MOD_RCTL)>; };
          c_w_andr: c_w_andr { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>;bindings = <&kp W>, <&kp LC(X)>;   mods = <(MOD_LCTL|MOD_RCTL)>; };
