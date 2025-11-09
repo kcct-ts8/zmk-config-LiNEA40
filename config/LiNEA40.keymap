@@ -8,15 +8,15 @@
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/pointing.h>
 
-#define MOUSE 1
-#define MARK 2
-#define CURSOR 3
-#define FUNCTION 4
-#define SCROLL 5
-#define WIRELESS 6
-#define L_IOS    7
-#define L_ANDR   8
-#define L_MAC    9
+#define MOUSE    4
+#define MARK     5
+#define CURSOR   6
+#define FUNCTION 7
+#define SCROLL   8
+#define WIRELESS 9
+#define L_IOS    1
+#define L_ANDR   2
+#define L_MAC    3
 
 //mouse cursol
 
@@ -185,13 +185,13 @@
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             wait-ms = <0>; tap-ms = <0>;
-            bindings = <&bt BT_SEL 1>, <&to 0>, <&to L_IOS>;  
+            bindings = <&bt BT_SEL 1>, <&to 0>, <&tog L_IOS>;  
         };
         to_andr: to_andr{
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             wait-ms = <0>; tap-ms = <0>;
-            bindings = <&bt BT_SEL 2>, <&to 0>, <&to L_ANDR>; 
+            bindings = <&bt BT_SEL 2>, <&to 0>, <&tog L_ANDR>; 
         };
     };
     behaviors {
