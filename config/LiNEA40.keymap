@@ -238,7 +238,7 @@
           #binding-cells = <0>;
           mods = <(MOD_LCTL|MOD_RCTL)>;
           bindings = <&kp P>, <&kp UP_ARROW>;
-        }
+        };
         c_f_right: c_f_andr {
           compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>;
           mods = <(MOD_LCTL|MOD_RCTL)>;
