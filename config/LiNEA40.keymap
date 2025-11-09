@@ -260,7 +260,22 @@
           mods = <(MOD_LCTL|MOD_RCTL)>;
           bindings = <&kp B>, <&kp LEFT_ARROW>;   // Ctrl+B -> ←
         };
+        c_p_andr: c_p_andr {
+          compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>;
+          mods = <(MOD_LCTL|MOD_RCTL)>;
+          bindings = <&kp B>, <&kp UP_ARROW>;   // Ctrl+P -> ←
+        };
+        c_h_andr: c_h_andr {
+          compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>;
+          mods = <(MOD_LCTL|MOD_RCTL)>;
+          bindings = <&kp H>, <&kp BACKSPACE>;   /* Ctrl+H → 後退(Backspace) */
+        };
         
+        c_n_andr: c_n_andr {
+          compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>;
+          mods = <(MOD_LCTL|MOD_RCTL)>;
+          bindings = <&kp N>, <&kp DOWN_ARROW>;  /* Ctrl+N → 下一行 */
+        };
         c_d_andr: c_d_andr {  // C-d: 削除
           compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>;
           bindings = <&kp D>, <&kp DELETE>;
@@ -333,9 +348,9 @@
           android_layer {
             // L_ANDR = 2
             bindings = <
-                &trans  &trans  &c_e_andr  &trans  &trans                     &trans  &trans  &trans       &trans  &andr_ping
-                &c_a_andr  &trans  &m_d_andr  &c_f_andr  &trans                   &trans  &trans  &c_k_andr    &trans  &trans/* ← c_d_andr を m_d_andr に変更 */
-                &trans  &trans  &trans      &trans  &c_b_andr                    &trans  &trans  &trans       &trans  &trans
+                &trans  &trans  &c_e_andr  &trans  &trans                     &c_y_andr  &trans  &trans       &trans  &c_p_andr
+                &c_a_andr  &trans  &c_d_andr  &c_f_andr  &trans                   &c_h_andr  &trans  &c_k_andr    &trans  &trans/* ← c_d_andr を m_d_andr に変更 */
+                &trans  &trans  &trans      &trans  &c_b_andr                    &c_n_andr  &trans  &trans       &trans  &trans
                 &trans  &trans  &trans      &trans  &trans    &trans  &trans  &trans          &trans       &trans  &c_sls_andr
             >;
           };
