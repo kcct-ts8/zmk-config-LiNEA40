@@ -137,24 +137,39 @@
        bindings = <&kp LS(LA(RIGHT))>, <&kp DELETE>; // Opt+Shift+→ → Delete
      };
 
-     // --- Android用 ---
-     em_kill_eol_andr: em_kill_eol_andr {
-       compatible = "zmk,behavior-macro";
-       #binding-cells = <0>;
-       wait-ms = <40>; tap-ms = <40>;
-       bindings = <&kp LS(END)>, <&kp DELETE>;       // Shift+End → Delete
-     };
-     em_del_word_fwd_andr: em_del_word_fwd_andr {
-       compatible = "zmk,behavior-macro";
-       #binding-cells = <0>;
-       // まずは Ctrl+Delete（非対応アプリがあれば選択→Deleteに切替）
-       bindings = <&kp LC(DELETE)>;
-     };
-        macro_andr_kill: macro_andr_kill {
-          compatible = "zmk,behavior-macro"; #binding-cells=<0>;
-          wait-ms=<40>; tap-ms=<40>;
-          bindings = <&kp LS(LG(RIGHT))>, <&kp DELETE>; /* Shift+Meta+→ → Del */
+         // --- Android用 ---
+         em_kill_eol_andr: em_kill_eol_andr {
+           compatible = "zmk,behavior-macro";
+           #binding-cells = <0>;
+           wait-ms = <40>; tap-ms = <40>;
+           bindings = <&kp LS(END)>, <&kp DELETE>;       // Shift+End → Delete
+         };
+         em_del_word_fwd_andr: em_del_word_fwd_andr {
+           compatible = "zmk,behavior-macro";
+           #binding-cells = <0>;
+           // まずは Ctrl+Delete（非対応アプリがあれば選択→Deleteに切替）
+           bindings = <&kp LC(DELETE)>;
+         };
+            macro_andr_kill: macro_andr_kill {
+              compatible = "zmk,behavior-macro"; #binding-cells=<0>;
+              wait-ms=<40>; tap-ms=<40>;
+              bindings = <&kp LS(LG(RIGHT))>, <&kp DELETE>; /* Shift+Meta+→ → Del */
+            };
+        /* --- Android: C-k を「行末まで選択→Delete」で実現 --- */
+        andr_kill_eol: andr_kill_eol {
+          compatible = "zmk,behavior-macro";
+          #binding-cells = <0>;
+          wait-ms = <40>; tap-ms = <40>;
+          bindings = <&kp LS(END)>, <&kp DELETE>;  // Shift+End → Delete
         };
+        
+        /* 代替: End が効かないアプリ用（Meta+→ による選択→削除）*/
+        andr_kill_eol_alt: andr_kill_eol_alt {
+          compatible = "zmk,behavior-macro";
+          #binding-cells = <0>;
+          wait-ms = <40>; tap-ms = <40>;
+          bindings = <&kp LS(LG(RIGHT))>, <&kp DELETE>;
+        }
 
         // --- OS/BT同時切替（例：7=iOS, 8=Android, 9=Mac） ---
         to_mac: to_mac  { bindings = <&bt BT_SEL 0>, <&to L_MAC>;  };
@@ -193,38 +208,72 @@
          m_w_ios: m_w_ios { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>;bindings = <&kp W>, <&kp LG(C)>;     mods = <(MOD_LALT|MOD_RALT)>; }; // Copy
          c_sls_ios: c_sls_ios { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>;bindings = <&kp SLASH>, <&kp LG(Z)>; mods = <(MOD_LCTL|MOD_RCTL)>; }; // Undo
     
-         /* --- Android: Home/End と Ctrl 系で意味を再現 --- */
-        /* --- Android: 受理されやすい代替 --- */
-        c_a_andr: c_a_andr { compatible = "zmk,behavior-mod-morph"; #binding-cells=<0>;
-          bindings = <&kp A>, <&kp LG(LEFT)>;  /* Meta+← = 行頭 */
+        /* ===== Android: Emacs → Windows/Linux 風へ ===== */
+        c_a_andr: c_a_andr {  // C-a: 行頭
+          compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>;
+          bindings = <&kp A>, <&kp HOME>;
           mods = <(MOD_LCTL|MOD_RCTL)>;
         };
-        c_e_andr: c_e_andr { compatible = "zmk,behavior-mod-morph"; #binding-cells=<0>;
-          bindings = <&kp E>, <&kp LG(RIGHT)>; /* Meta+→ = 行末 */
+        
+        c_e_andr: c_e_andr {  // C-e: 行末
+          compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>;
+          bindings = <&kp E>, <&kp END>;
           mods = <(MOD_LCTL|MOD_RCTL)>;
         };
-        /* 単語移動は Alt に寄せる方が効くアプリが多い */
-        m_b_andr: m_b_andr { compatible="zmk,behavior-mod-morph"; #binding-cells=<0>;
-          bindings = <&kp B>, <&kp LA(LEFT)>;
+        
+        m_b_andr: m_b_andr {  // M-b: 1語左
+          compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>;
+          bindings = <&kp B>, <&kp LC(LEFT)>;
           mods = <(MOD_LALT|MOD_RALT)>;
         };
-        m_f_andr: m_f_andr { compatible="zmk,behavior-mod-morph"; #binding-cells=<0>;
-          bindings = <&kp F>, <&kp LA(RIGHT)>;
+        
+        m_f_andr: m_f_andr {  // M-f: 1語右
+          compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>;
+          bindings = <&kp F>, <&kp LC(RIGHT)>;
           mods = <(MOD_LALT|MOD_RALT)>;
         };
-        /* C-k: Shift+Meta+→ → Delete に変更（Endが無視される対策） */
-        c_k_andr: c_k_andr { compatible="zmk,behavior-mod-morph"; #binding-cells=<0>;
-          bindings = <&kp K>, <&macro_andr_kill>; /* 下のマクロを新設 */
+        
+        c_d_andr: c_d_andr {  // C-d: 削除
+          compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>;
+          bindings = <&kp D>, <&kp DELETE>;
           mods = <(MOD_LCTL|MOD_RCTL)>;
         };
-        /* C-d/M-d/C-y などはそのままでOKなことが多いが、効かないアプリがあれば選択→Delete 方式へ */
-
-         m_d_andr: m_d_andr { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>;bindings = <&kp D>, <&em_del_word_fwd_andr>; mods = <(MOD_LALT|MOD_RALT)>; };
-         c_y_andr: c_y_andr { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>;bindings = <&kp Y>, <&kp LC(V)>;   mods = <(MOD_LCTL|MOD_RCTL)>; };
-         c_w_andr: c_w_andr { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>;bindings = <&kp W>, <&kp LC(X)>;   mods = <(MOD_LCTL|MOD_RCTL)>; };
-         m_w_andr: m_w_andr { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>;bindings = <&kp W>, <&kp LC(C)>;   mods = <(MOD_LALT|MOD_RALT)>; };
-         c_sls_andr: c_sls_andr { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>;bindings = <&kp SLASH>, <&kp LC(Z)>; mods = <(MOD_LCTL|MOD_RCTL)>; };
-         /* ===== 2) Mod‑Morph：修飾キー検知で置換 ===== */
+        
+        m_d_andr: m_d_andr {  // M-d: 次語を削除
+          compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>;
+          bindings = <&kp D>, <&kp LC(DELETE)>;
+          mods = <(MOD_LALT|MOD_RALT)>;
+        };
+        
+        c_k_andr: c_k_andr {  // C-k: 行末まで kill
+          compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>;
+          bindings = <&kp K>, <&andr_kill_eol>;  // 必要なら andr_kill_eol_alt に切替
+          mods = <(MOD_LCTL|MOD_RCTL)>;
+        };
+        
+        c_y_andr: c_y_andr {  // C-y: 貼り付け
+          compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>;
+          bindings = <&kp Y>, <&kp LC(V)>;
+          mods = <(MOD_LCTL|MOD_RCTL)>;
+        };
+        
+        c_w_andr: c_w_andr {  // C-w: 切り取り
+          compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>;
+          bindings = <&kp W>, <&kp LC(X)>;
+          mods = <(MOD_LCTL|MOD_RCTL)>;
+        };
+        
+        m_w_andr: m_w_andr {  // M-w: コピー
+          compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>;
+          bindings = <&kp W>, <&kp LC(C)>;
+          mods = <(MOD_LALT|MOD_RALT)>;
+        };
+        
+        c_sls_andr: c_sls_andr {  // C-/: Undo
+          compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>;
+          bindings = <&kp SLASH>, <&kp LC(Z)>;
+          mods = <(MOD_LCTL|MOD_RCTL)>;
+        };
 
     };
 
@@ -337,11 +386,11 @@
           android_layer {
             // L_ANDR = 8
             bindings = <
-                &trans  &trans  &c_e_andr  &trans  &trans                        &trans  &trans  &trans       &trans  &trans
-                //&c_a_andr &trans &c_d_andr  &trans  &trans                        &trans  &trans  &c_k_andr     &trans  &trans
+                &trans  &trans  &c_e_andr  &trans  &trans                     &trans  &trans  &trans       &trans  &trans
+                //&c_a_andr &trans &c_d_andr  &trans  &trans                  &trans  &trans  &c_k_andr    &trans  &trans
                 &c_a_andr  &trans  &m_d_andr  &trans  &trans   /* ← c_d_andr を m_d_andr に変更 */
-                &trans  &trans  &trans      &trans  &trans                        &trans  &trans  &trans        &trans  &trans
-                &trans  &trans  &trans      &trans  &trans    &trans   &trans     &trans             &trans     &trans  &c_sls_andr
+                &trans  &trans  &trans      &trans  &trans                    &trans  &trans  &trans       &trans  &trans
+                &trans  &trans  &trans      &trans  &trans    &trans  &trans  &trans          &trans       &trans  &c_sls_andr
             >;
           };
         
