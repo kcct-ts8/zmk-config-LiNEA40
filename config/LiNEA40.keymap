@@ -8,17 +8,15 @@
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/pointing.h>
 
-#define MOUSE 1
-#define MARK 2
-#define CURSOR 3
-#define FUNCTION 4
-#define SCROLL 5
-#define WIRELESS 6
-
-// ← 新規: OSごとのEmacs翻訳レイヤー
-#define L_IOS       7
-#define L_ANDR      8
-#define L_MAC       9
+#define L_IOS       1
+#define L_ANDR      2
+#define L_MAC       3
+#define MOUSE 4
+#define MARK 5
+#define CURSOR 6
+#define FUNCTION 7
+#define SCROLL 8
+#define WIRELESS 9
 
 //mouse cursol
 
@@ -252,6 +250,16 @@
           bindings = <&kp F>, <&kp LC(RIGHT)>;
           mods = <(MOD_LALT|MOD_RALT)>;
         };
+        c_f_andr: c_f_andr {
+          compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>;
+          mods = <(MOD_LCTL|MOD_RCTL)>;
+          bindings = <&kp F>, <&kp RIGHT>;  // Ctrl+F -> →
+        };
+        c_b_andr: c_b_andr {
+          compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>;
+          mods = <(MOD_LCTL|MOD_RCTL)>;
+          bindings = <&kp B>, <&kp LEFT>;   // Ctrl+B -> ←
+        };
         
         c_d_andr: c_d_andr {  // C-d: 削除
           compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>;
@@ -370,10 +378,10 @@
         //SCROLL {
             // SCROLL = 5
             bindings = <
-                &trans    &kp LC(LG(LEFT_ARROW))  &kp UP_ARROW  &kp LC(LG(RIGHT_ARROW))  &trans                    &kp KP_MULTIPLY  &kp NUMBER_7  &kp NUMBER_8  &kp NUMBER_9  &kp KP_PLUS
+                &trans    &kp LC(LG(LEFT_ARROW))  &kp UP_ARROW  &kp LC(LG(RIGHT_ARROW))  &trans                    &kp KP_MULTIPLY  &kp NUMBER_1  &kp NUMBER_2  &kp NUMBER_3  &kp KP_PLUS
                 &trans    &kp LEFT_ARROW          &kp DOWN      &kp RIGHT_ARROW          &trans                    &kp KP_SLASH     &kp NUMBER_4  &kp NUMBER_5  &kp NUMBER_6  &kp KP_MINUS
-                &kp HOME  &kp PAGE_DOWN           &kp END       &kp PAGE_UP              &trans                    &kp UNDERSCORE   &kp NUMBER_1  &kp NUMBER_2  &kp NUMBER_3  &kp ENTER
-                &trans    &trans                  &trans        &trans                   &trans  &trans    &trans  &kp NUMBER_0                   &kp NUMBER_0  &kp DOT       &kp QUESTION
+                &kp HOME  &kp PAGE_DOWN           &kp END       &kp PAGE_UP              &trans                    &kp NUMBER_0     &kp NUMBER_7  &kp NUMBER_8  &kp NUMBER_9  &kp ENTER
+                &trans    &trans                  &trans        &trans                   &trans  &trans    &trans  &kp NUMBER_0                   &kp UNDERSCORE  &kp DOT       &kp QUESTION
             >;
 
             sensor-bindings = <&inc_dec_kp DOWN_ARROW UP_ARROW>;
@@ -408,8 +416,8 @@
             // L_ANDR = 8
             bindings = <
                 &trans  &trans  &c_e_andr  &trans  &trans                     &trans  &trans  &trans       &trans  &andr_ping
-                &c_a_andr  &trans  &m_d_andr  &m_f_andr  &trans                   &trans  &trans  &c_k_andr    &trans  &trans/* ← c_d_andr を m_d_andr に変更 */
-                &trans  &trans  &trans      &trans  &m_b_andr                    &trans  &trans  &trans       &trans  &trans
+                &c_a_andr  &trans  &m_d_andr  &c_f_andr  &trans                   &trans  &trans  &c_k_andr    &trans  &trans/* ← c_d_andr を m_d_andr に変更 */
+                &trans  &trans  &trans      &trans  &c_b_andr                    &trans  &trans  &trans       &trans  &trans
                 &trans  &trans  &trans      &trans  &trans    &trans  &trans  &trans          &trans       &trans  &c_sls_andr
             >;
           };
