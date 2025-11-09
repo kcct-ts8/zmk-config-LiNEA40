@@ -177,9 +177,24 @@
           bindings = <&kp A>, <&kp N>, <&kp D>, <&kp R>;
         };
         // --- OS/BT同時切替（例：7=iOS, 8=Android, 9=Mac） ---
-        to_mac: to_mac  { bindings = <&bt BT_SEL 0>, <&to L_MAC>;  };
-        to_ios: to_ios  { bindings = <&bt BT_SEL 1>, <&to L_IOS>;  };
-        to_andr: to_andr{ bindings = <&bt BT_SEL 2>, <&to L_ANDR>; };
+        to_mac: to_mac  {        
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <0>; tap-ms = <0>;
+            bindings = <&bt BT_SEL 0>, <&to L_MAC>;
+        };
+        to_ios: to_ios  { 
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <0>; tap-ms = <0>;
+            bindings = <&bt BT_SEL 1>, <&to L_IOS>;  
+        };
+        to_andr: to_andr{
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <0>; tap-ms = <0>;
+            bindings = <&bt BT_SEL 2>, <&to L_ANDR>; 
+        };
     };
     behaviors {
         re_kp: sensor_rotate_kp {
