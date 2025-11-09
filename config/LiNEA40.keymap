@@ -174,6 +174,38 @@
 
             tap-ms = <20>;
         };
+         /* ===== 2) Mod‑Morph：修飾キー検知で置換 ===== */
+         /* --- iOS: Ctrl系/Meta系をiOSが理解するCmd/Opt系列に変換 --- */
+         c_a_ios: c_a_ios {  // C-a = 行頭
+           compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>;
+           bindings = <&kp A>, <&kp LG(LEFT)>;     // Cmd+←
+           mods = <(MOD_LCTL|MOD_RCTL)>;
+         };
+         c_e_ios: c_e_ios { bindings = <&kp E>, <&kp LG(RIGHT)>; mods = <(MOD_LCTL|MOD_RCTL)>; };
+         m_b_ios: m_b_ios { bindings = <&kp B>, <&kp LA(LEFT)>;  mods = <(MOD_LALT|MOD_RALT)>; };
+         m_f_ios: m_f_ios { bindings = <&kp F>, <&kp LA(RIGHT)>; mods = <(MOD_LALT|MOD_RALT)>; };
+         c_d_ios: c_d_ios { bindings = <&kp D>, <&kp DELETE>;    mods = <(MOD_LCTL|MOD_RCTL)>; };
+         c_k_ios: c_k_ios { bindings = <&kp K>, <&em_kill_eol_ios>; mods = <(MOD_LCTL|MOD_RCTL)>; };
+         m_d_ios: m_d_ios { bindings = <&kp D>, <&em_del_word_fwd_ios>; mods = <(MOD_LALT|MOD_RALT)>; };
+         c_y_ios: c_y_ios { bindings = <&kp Y>, <&kp LG(V)>;     mods = <(MOD_LCTL|MOD_RCTL)>; }; // Paste
+         c_w_ios: c_w_ios { bindings = <&kp W>, <&kp LG(X)>;     mods = <(MOD_LCTL|MOD_RCTL)>; }; // Cut
+         m_w_ios: m_w_ios { bindings = <&kp W>, <&kp LG(C)>;     mods = <(MOD_LALT|MOD_RALT)>; }; // Copy
+         c_sls_ios: c_sls_ios { bindings = <&kp SLASH>, <&kp LG(Z)>; mods = <(MOD_LCTL|MOD_RCTL)>; }; // Undo
+    
+         /* --- Android: Home/End と Ctrl 系で意味を再現 --- */
+         c_a_andr: c_a_andr { bindings = <&kp A>, <&kp HOME>;    mods = <(MOD_LCTL|MOD_RCTL)>; };
+         c_e_andr: c_e_andr { bindings = <&kp E>, <&kp END>;     mods = <(MOD_LCTL|MOD_RCTL)>; };
+         m_b_andr: m_b_andr { bindings = <&kp B>, <&kp LC(LEFT)>;  mods = <(MOD_LALT|MOD_RALT)>; };
+         m_f_andr: m_f_andr { bindings = <&kp F>, <&kp LC(RIGHT)>; mods = <(MOD_LALT|MOD_RALT)>; };
+         c_d_andr: c_d_andr { bindings = <&kp D>, <&kp DELETE>;  mods = <(MOD_LCTL|MOD_RCTL)>; };
+         c_k_andr: c_k_andr { bindings = <&kp K>, <&em_kill_eol_andr>; mods = <(MOD_LCTL|MOD_RCTL)>; };
+         m_d_andr: m_d_andr { bindings = <&kp D>, <&em_del_word_fwd_andr>; mods = <(MOD_LALT|MOD_RALT)>; };
+         c_y_andr: c_y_andr { bindings = <&kp Y>, <&kp LC(V)>;   mods = <(MOD_LCTL|MOD_RCTL)>; };
+         c_w_andr: c_w_andr { bindings = <&kp W>, <&kp LC(X)>;   mods = <(MOD_LCTL|MOD_RCTL)>; };
+         m_w_andr: m_w_andr { bindings = <&kp W>, <&kp LC(C)>;   mods = <(MOD_LALT|MOD_RALT)>; };
+         c_sls_andr: c_sls_andr { bindings = <&kp SLASH>, <&kp LC(Z)>; mods = <(MOD_LCTL|MOD_RCTL)>; };
+         /* ===== 2) Mod‑Morph：修飾キー検知で置換 ===== */
+
     };
 
     keymap {
