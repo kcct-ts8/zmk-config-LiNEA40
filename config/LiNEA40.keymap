@@ -116,7 +116,50 @@
             key-positions = <16 17>;
         };
     };
+    /* ===== 1) マクロ：複数キーを順に送る（BLEの並び替え防止のため40ms推奨） ===== */
+    macros {
+     // --- iOS用 ---
+     em_kill_eol_ios: em_kill_eol_ios {
+       compatible = "zmk,behavior-macro";
+       #binding-cells = <0>;
+       wait-ms = <40>; tap-ms = <40>;
+       bindings = <&kp LS(LG(RIGHT))>, <&kp DELETE>; // Shift+Cmd+→ → Delete
+     };
+     em_del_word_fwd_ios: em_del_word_fwd_ios {
+       compatible = "zmk,behavior-macro";
+       #binding-cells = <0>;
+       wait-ms = <40>; tap-ms = <40>;
+       bindings = <&kp LS(LA(RIGHT))>, <&kp DELETE>; // Opt+Shift+→ → Delete
+     };
 
+     // --- Android用 ---
+     em_kill_eol_andr: em_kill_eol_andr {
+       compatible = "zmk,behavior-macro";
+       #binding-cells = <0>;
+       wait-ms = <40>; tap-ms = <40>;
+       bindings = <&kp LS(END)>, <&kp DELETE>;       // Shift+End → Delete
+     };
+     em_del_word_fwd_andr: em_del_word_fwd_andr {
+       compatible = "zmk,behavior-macro";
+       #binding-cells = <0>;
+       // まずは Ctrl+Delete（非対応アプリがあれば選択→Deleteに切替）
+       bindings = <&kp LC(DELETE)>;
+     };
+
+     // --- OS/BT同時切替（例：0=Mac,1=iOS,2=Android） ---
+     to_mac: to_mac {
+       compatible = "zmk,behavior-macro"; #binding-cells = <0>; wait-ms = <0>; tap-ms = <0>;
+       bindings = <&to L_MAC>, <&bt BT_SEL 0>;
+     };
+     to_ios: to_ios {
+       compatible = "zmk,behavior-macro"; #binding-cells = <0>; wait-ms = <0>; tap-ms = <0>;
+       bindings = <&to L_IOS>, <&bt BT_SEL 1>;
+     };
+     to_andr: to_andr {
+       compatible = "zmk,behavior-macro"; #binding-cells = <0>; wait-ms = <0>; tap-ms = <0>;
+       bindings = <&to L_ANDR>, <&bt BT_SEL 2>;
+     };
+    };
     behaviors {
         re_kp: sensor_rotate_kp {
             compatible = "zmk,behavior-sensor-rotate-var";
