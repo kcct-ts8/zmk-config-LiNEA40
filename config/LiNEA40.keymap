@@ -222,6 +222,7 @@
          c_k_ios: c_k_ios { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>;bindings = <&kp K>, <&em_kill_eol_ios>; mods = <(MOD_LCTL|MOD_RCTL)>; };
          m_d_ios: m_d_ios { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>;bindings = <&kp D>, <&em_del_word_fwd_ios>; mods = <(MOD_LALT|MOD_RALT)>; };
          c_y_ios: c_y_ios { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>;bindings = <&kp Y>, <&kp LG(V)>;     mods = <(MOD_LCTL|MOD_RCTL)>; }; // Paste
+         c_m_ios: c_m_ios { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>;bindings = <&kp M>, <&kp ENTER>;     mods = <(MOD_LCTL|MOD_RCTL)>; }; // Paste
          c_w_ios: c_w_ios { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>;bindings = <&kp W>, <&kp LG(X)>;     mods = <(MOD_LCTL|MOD_RCTL)>; }; // Cut
          m_w_ios: m_w_ios { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>;bindings = <&kp W>, <&kp LG(C)>;     mods = <(MOD_LALT|MOD_RALT)>; }; // Copy
          c_sls_ios: c_sls_ios { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>;bindings = <&kp SLASH>, <&kp LG(Z)>; mods = <(MOD_LCTL|MOD_RCTL)>; }; // Undo
@@ -238,18 +239,11 @@
           bindings = <&kp E>, <&kp END>;
           mods = <(MOD_LCTL|MOD_RCTL)>;
         };
-        
-        m_b_andr: m_b_andr {  // M-b: 1語左
+        c_m_andr: c_m_andr {
           compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>;
-          bindings = <&kp B>, <&kp LC(LEFT)>;
-          mods = <(MOD_LALT|MOD_RALT)>;
-        };
-        
-        m_f_andr: m_f_andr {  // M-f: 1語右
-          compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>;
-          bindings = <&kp F>, <&kp LC(RIGHT)>;
-          mods = <(MOD_LALT|MOD_RALT)>;
-        };
+          mods = <(MOD_LCTL|MOD_RCTL)>;
+          bindings = <&kp F>, <&kp ENTER>;  // Ctrl+M -> Enter
+        };        
         c_f_andr: c_f_andr {
           compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>;
           mods = <(MOD_LCTL|MOD_RCTL)>;
@@ -280,12 +274,6 @@
           compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>;
           bindings = <&kp D>, <&kp DELETE>;
           mods = <(MOD_LCTL|MOD_RCTL)>;
-        };
-        
-        m_d_andr: m_d_andr {  // M-d: 次語を削除
-          compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>;
-          bindings = <&kp D>, <&kp LC(DELETE)>;
-          mods = <(MOD_LALT|MOD_RALT)>;
         };
         
         c_k_andr: c_k_andr {  // C-k: 行末まで kill
@@ -340,7 +328,7 @@
             bindings = <
                 &trans  &trans  &c_e_ios  &trans  &trans                         &trans  &trans  &trans      &trans  &trans
                 &c_a_ios &trans  &c_d_ios  &trans  &trans                         &trans  &trans  &c_k_ios    &trans  &trans
-                &trans  &trans  &trans     &trans  &trans                         &trans  &trans  &trans      &trans  &trans
+                &trans  &trans  &trans     &trans  &trans                         &trans  &c_m_ios  &trans      &trans  &trans
                 &trans  &trans  &trans     &trans  &trans    &trans    &trans     &trans            &trans     &trans  &c_sls_ios
             >;
           };
@@ -348,9 +336,9 @@
           android_layer {
             // L_ANDR = 2
             bindings = <
-                &trans  &trans  &c_e_andr  &trans  &trans                     &c_y_andr  &trans  &trans       &trans  &c_p_andr
+                &trans  &c_w_andr  &c_e_andr  &trans  &trans                     &c_y_andr  &trans  &trans       &trans  &c_p_andr
                 &c_a_andr  &trans  &c_d_andr  &c_f_andr  &trans                   &c_h_andr  &trans  &c_k_andr    &trans  &trans/* ← c_d_andr を m_d_andr に変更 */
-                &trans  &trans  &trans      &trans  &c_b_andr                    &c_n_andr  &trans  &trans       &trans  &trans
+                &trans  &trans  &trans      &trans  &c_b_andr                    &c_n_andr  &c_m_andr  &trans       &trans  &trans
                 &trans  &trans  &trans      &trans  &trans    &trans  &trans  &trans          &trans       &trans  &c_sls_andr
             >;
           };
@@ -360,8 +348,8 @@
             bindings = <
                 &trans &trans &trans &trans &trans                              &trans &trans &trans &trans &trans
                 &trans &trans &trans &trans &trans                              &trans &trans &trans &trans &trans
-                &trans &trans &trans &trans &trans                              &trans &trans &trans &trans &trans
-                &trans &trans &trans &trans &trans &trans &trans &trans         &trans &trans &trans
+                &trans &trans &trans &trans &trans                              &trans &c_m_ios &trans &trans &trans
+                &trans &trans &trans        &trans &trans       &trans &trans &trans         &trans &trans &trans
             >;
           };
 
