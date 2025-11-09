@@ -418,7 +418,7 @@
             // L_MAC = 9（基本は素通し・必要なら C-k だけ補助）
             bindings = <
                 &trans &trans &trans &trans &trans                              &trans &trans &trans &trans &trans
-                &trans &trans &trans &trans &trans                              &trans &trans &em_kill_eol_ios &trans &trans
+                &trans &trans &trans &trans &trans                              &trans &trans &trans &trans &trans
                 &trans &trans &trans &trans &trans                              &trans &trans &trans &trans &trans
                 &trans &trans &trans &trans &trans &trans &trans &trans         &trans &trans &trans
             >;
