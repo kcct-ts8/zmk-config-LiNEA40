@@ -179,21 +179,19 @@
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             wait-ms = <0>; tap-ms = <0>;
-            bindings = <&bt BT_SEL 0>, <&to 0>,        /* ベースを default に */
-            <&off L_IOS>, <&off L_ANDR>,    /* 他OSを明示的にOFF  */
-            <&on  L_MAC>;                   /* 目的のOSだけON     */
+            bindings = <&bt BT_SEL 0>, <&to 0>,  <&tog L_MAC>;      /* ベースを default に */
         };
         to_ios: to_ios  { 
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             wait-ms = <0>; tap-ms = <0>;
-            bindings = <&bt BT_SEL 1>, <&to 0>, <&off L_ANDR>, <&off L_MAC>, <&on L_IOS>;
+            bindings = <&bt BT_SEL 1>, <&to 0>, <&tog L_IOS>;
         };
         to_andr: to_andr{
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             wait-ms = <0>; tap-ms = <0>;
-            bindings = <&bt BT_SEL 2>, <&to 0>, <&off L_IOS>, <&off L_MAC>, <&on L_ANDR>;
+            bindings = <&bt BT_SEL 2>, <&to 0>, <&tog L_ANDR>;
         };
     };
     behaviors {
