@@ -231,7 +231,7 @@
           #binding-cells = <0>;
           mods = <(MOD_LCTL|MOD_RCTL)>;
           bindings = <&kp M>, <&kp ENTER>;
-        }
+        };
         /* === ついでに: Ctrl+P → ↑ （上一行）=== */
         c_p_up: c_p_up {
           compatible = "zmk,behavior-mod-morph";
