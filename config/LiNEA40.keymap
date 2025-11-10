@@ -60,7 +60,7 @@
         layers = <SCROLL>;
         input-processors =
             <&zip_xy_transform INPUT_TRANSFORM_Y_INVERT>,
-            //スクロール方向を逆転,,,,,,,,,,,,
+            //スクロール方向を逆転,,,,,,,,,,,,,
             <&zip_xy_to_scroll_mapper>;
     };
 };
@@ -75,13 +75,13 @@
         };
 
         DeleteKey {
-            bindings = <&kp DEL>;
-            key-positions = <7 8>;
+            bindings = <&kp DELETE>;
+            key-positions = <6 7>;
         };
 
         InsertKey {
-            bindings = <&kp INS>;
-            key-positions = <6 7>;
+            bindings = <&kp LS(TAB)>;
+            key-positions = <1 2>;
         };
 
         CenterClick {
@@ -232,7 +232,8 @@
             tapping-term-ms = <180>;         /* 180〜220で微調整 */
             quick-tap-ms = <0>;
             bindings = <&mo>, <&kp>;
-         /* Hold=レイヤ（&mo）、Tap=キー（&kp） */
+
+            /* Hold=レイヤ（&mo）、Tap=キー（&kp） */
         };
 
         /* ===== 2) Mod‑Morph：修飾キー検知で置換 ===== */
@@ -242,7 +243,9 @@
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
             bindings = <&kp A>, <&kp LG(LEFT)>;
-     // Cmd+←
+
+            // Cmd+←
+
             mods = <(MOD_LCTL|MOD_RCTL)>;
         };
 
@@ -345,7 +348,8 @@
             #binding-cells = <0>;
             mods = <(MOD_LCTL|MOD_RCTL)>;
             bindings = <&kp F>, <&kp RIGHT_ARROW>;
-  // Ctrl+F -> →
+
+            // Ctrl+F -> →
         };
 
         c_b_left: c_b_andr {
@@ -353,7 +357,8 @@
             #binding-cells = <0>;
             mods = <(MOD_LCTL|MOD_RCTL)>;
             bindings = <&kp B>, <&kp LEFT_ARROW>;
-   // Ctrl+B -> ←
+
+            // Ctrl+B -> ←
         };
 
         c_n_down: c_n_andr {
@@ -361,7 +366,8 @@
             #binding-cells = <0>;
             mods = <(MOD_LCTL|MOD_RCTL)>;
             bindings = <&kp N>, <&kp DOWN_ARROW>;
-  /* Ctrl+N → 下一行 */
+
+            /* Ctrl+N → 下一行 */
         };
 
         /* ===== Android: Emacs → Windows/Linux 風へ ===== */
@@ -387,7 +393,8 @@
             #binding-cells = <0>;
             mods = <(MOD_LCTL|MOD_RCTL)>;
             bindings = <&kp H>, <&kp BACKSPACE>;
-   /* Ctrl+H → 後退(Backspace) */
+
+            /* Ctrl+H → 後退(Backspace) */
         };
 
         c_d_andr: c_d_andr {
@@ -402,7 +409,9 @@
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
             bindings = <&kp K>, <&andr_kill_eol>;
-  // 必要なら andr_kill_eol_alt に切替
+
+            // 必要なら andr_kill_eol_alt に切替
+
             mods = <(MOD_LCTL|MOD_RCTL)>;
         };
 
