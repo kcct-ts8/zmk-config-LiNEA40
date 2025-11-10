@@ -208,6 +208,15 @@
 
             tap-ms = <20>;
         };
+        /* Layer-Tap を “Hold 優先” にする共通ビヘイビア */
+        lt_hold: lt_hold {
+          compatible = "zmk,behavior-hold-tap";
+          #binding-cells = <2>;            /* 引数は <レイヤ番号, タップ時のキー> の2つ */
+          flavor = "hold-preferred";       /* ← これが要点：長押し判定を優先 */
+          tapping-term-ms = <180>;         /* 180〜220で微調整 */
+          quick-tap-ms = <0>;
+          bindings = <&mo>, <&kp>;         /* Hold=レイヤ（&mo）、Tap=キー（&kp） */
+        }
          /* ===== 2) Mod‑Morph：修飾キー検知で置換 ===== */
          /* --- iOS: Ctrl系/Meta系をiOSが理解するCmd/Opt系列に変換 --- */
          c_a_ios: c_a_ios {  // C-a = 行頭
@@ -320,8 +329,8 @@
                 &kp Q               &kp W           &kp E         &kp R  &kp T                                         &kp Y        &kp U  &kp I               &kp O              &kp P
                 &kp A               &kp S           &kp D         &kp F  &kp G                                         &kp H        &kp J  &kp K               &kp L              &kp SEMI
                 &kp Z               &kp X           &kp C         &kp V  &kp B                                         &kp N        &kp M  &kp COMMA           &kp DOT            &mt RIGHT_SHIFT SLASH
-                // &mt LEFT_SHIFT TAB  &lt 4 LEFT_ALT  &lt 3 ESCAPE  &none  &kp LEFT_GUI  &mt LCTRL SPACE    &lt 2 SPACE  &lt 5 ENTER         &lt 6 LEFT_BRACKET  &kp RIGHT_BRACKET  &kp SINGLE_QUOTE
-                &mt LEFT_SHIFT TAB  &lt FUNCTION LEFT_ALT  &lt CURSOR ESCAPE  &none  &kp LEFT_GUI  &mt LCTRL SPACE    &lt MARK SPACE  &lt SCROLL ENTER         &lt WIRELESS LEFT_BRACKET  &kp RIGHT_BRACKET  &kp SINGLE_QUOTE
+                // &mt LEFT_SHIFT TAB  &lt_hold 4 LEFT_ALT  &lt_hold 3 ESCAPE  &none  &kp LEFT_GUI  &mt LCTRL SPACE    &lt_hold 2 SPACE  &lt_hold 5 ENTER         &lt_hold 6 LEFT_BRACKET  &kp RIGHT_BRACKET  &kp SINGLE_QUOTE
+                &mt LEFT_SHIFT TAB  &lt_hold FUNCTION LEFT_ALT  &lt_hold CURSOR ESCAPE  &none  &kp LEFT_GUI  &mt LCTRL SPACE    &lt_hold MARK SPACE  &lt_hold SCROLL ENTER         &lt_hold WIRELESS LEFT_BRACKET  &kp RIGHT_BRACKET  &kp SINGLE_QUOTE
             >;
 
             sensor-bindings = <&mouse_scrl SCRL_DOWN SCRL_UP>;
