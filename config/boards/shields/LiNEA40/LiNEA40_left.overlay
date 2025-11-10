@@ -1,5 +1,9 @@
 #include "LiNEA40.dtsi"
 
+&nfct {
+    status = "disabled";
+};
+
 &kscan0 {
     /* ★ ここを追加：デバウンス（まず 3/3ms で様子見） */
     debounce-press-ms = <3>;
