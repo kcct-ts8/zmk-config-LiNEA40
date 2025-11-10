@@ -60,7 +60,7 @@
         layers = <SCROLL>;
         input-processors =
             <&zip_xy_transform INPUT_TRANSFORM_Y_INVERT>,
-            //スクロール方向を逆転,,,,,,,,,,,
+            //スクロール方向を逆転,,,,,,,,,,,,
             <&zip_xy_to_scroll_mapper>;
     };
 };
@@ -69,9 +69,9 @@
     combos {
         compatible = "zmk,combos";
 
-        ZenkakuHankaku {
-            bindings = <&kp LANGUAGE_6>;
-            key-positions = <11 12>;
+        tab {
+            bindings = <&kp TAB>;
+            key-positions = <0 1>;
         };
 
         DeleteKey {
@@ -103,97 +103,111 @@
             bindings = <&mkp MB5>;
             key-positions = <26 27>;
         };
-
-        backtop {
-            bindings = <&caps_word>;
-            key-positions = <10 1 21 22>;
-        };
-
-        english {
-            bindings = <&kp LANGUAGE_8>;
-            key-positions = <12 13>;
-        };
-
-        japanese {
-            bindings = <&kp LANGUAGE_1>;
-            key-positions = <16 17>;
-        };
     };
+
     /* ===== 1) マクロ：複数キーを順に送る（BLEの並び替え防止のため40ms推奨） ===== */
-    macros {
-     // --- iOS用 ---
-     em_kill_eol_ios: em_kill_eol_ios {
-       compatible = "zmk,behavior-macro";
-       #binding-cells = <0>;
-       wait-ms = <40>; tap-ms = <40>;
-       bindings = <&kp LS(LG(RIGHT))>, <&kp DELETE>; // Shift+Cmd+→ → Delete
-     };
-     em_del_word_fwd_ios: em_del_word_fwd_ios {
-       compatible = "zmk,behavior-macro";
-       #binding-cells = <0>;
-       wait-ms = <40>; tap-ms = <40>;
-       bindings = <&kp LS(LA(RIGHT))>, <&kp DELETE>; // Opt+Shift+→ → Delete
-     };
 
-         // --- Android用 ---
-         em_kill_eol_andr: em_kill_eol_andr {
-           compatible = "zmk,behavior-macro";
-           #binding-cells = <0>;
-           wait-ms = <40>; tap-ms = <40>;
-           bindings = <&kp LS(END)>, <&kp DELETE>;       // Shift+End → Delete
-         };
-         em_del_word_fwd_andr: em_del_word_fwd_andr {
-           compatible = "zmk,behavior-macro";
-           #binding-cells = <0>;
-           // まずは Ctrl+Delete（非対応アプリがあれば選択→Deleteに切替）
-           bindings = <&kp LC(DELETE)>;
-         };
-            macro_andr_kill: macro_andr_kill {
-              compatible = "zmk,behavior-macro"; #binding-cells=<0>;
-              wait-ms=<40>; tap-ms=<40>;
-              bindings = <&kp LS(LG(RIGHT))>, <&kp DELETE>; /* Shift+Meta+→ → Del */
-            };
+    macros {
+        // --- iOS用 ---
+
+        em_kill_eol_ios: em_kill_eol_ios {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <40>;
+            tap-ms = <40>;
+            bindings = <&kp LS(LG(RIGHT)) &kp DELETE>; // Shift+Cmd+→ → Delete
+        };
+
+        em_del_word_fwd_ios: em_del_word_fwd_ios {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <40>;
+            tap-ms = <40>;
+            bindings = <&kp LS(LA(RIGHT)) &kp DELETE>; // Opt+Shift+→ → Delete
+        };
+
+        // --- Android用 ---
+
+        em_kill_eol_andr: em_kill_eol_andr {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <40>;
+            tap-ms = <40>;
+            bindings = <&kp LS(END) &kp DELETE>;       // Shift+End → Delete
+        };
+
+        em_del_word_fwd_andr: em_del_word_fwd_andr {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+
+            // まずは Ctrl+Delete（非対応アプリがあれば選択→Deleteに切替）
+
+            bindings = <&kp LC(DELETE)>;
+        };
+
+        macro_andr_kill: macro_andr_kill {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <40>;
+            tap-ms = <40>;
+            bindings = <&kp LS(LG(RIGHT)) &kp DELETE>; /* Shift+Meta+→ → Del */
+        };
+
         /* --- Android: C-k を「行末まで選択→Delete」で実現 --- */
+
         andr_kill_eol: andr_kill_eol {
-          compatible = "zmk,behavior-macro";
-          #binding-cells = <0>;
-          wait-ms = <40>; tap-ms = <40>;
-          bindings = <&kp LS(END)>, <&kp DELETE>;  // Shift+End → Delete
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <40>;
+            tap-ms = <40>;
+            bindings = <&kp LS(END) &kp DELETE>;  // Shift+End → Delete
         };
-        
+
         /* 代替: End が効かないアプリ用（Meta+→ による選択→削除）*/
+
         andr_kill_eol_alt: andr_kill_eol_alt {
-          compatible = "zmk,behavior-macro";
-          #binding-cells = <0>;
-          wait-ms = <40>; tap-ms = <40>;
-          bindings = <&kp LS(LG(RIGHT))>, <&kp DELETE>;
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <40>;
+            tap-ms = <40>;
+            bindings = <&kp LS(LG(RIGHT)) &kp DELETE>;
         };
+
         andr_ping: andr_ping {
-          compatible = "zmk,behavior-macro";
-          #binding-cells = <0>;
-          wait-ms = <20>; tap-ms = <20>;
-          bindings = <&kp A>, <&kp N>, <&kp D>, <&kp R>;
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <20>;
+            tap-ms = <20>;
+            bindings = <&kp A &kp N &kp D &kp R>;
         };
+
         // --- OS/BT同時切替（例：7=iOS, 8=Android, 9=Mac） ---
-        to_mac: to_mac  {        
+
+        to_mac: to_mac {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-            wait-ms = <0>; tap-ms = <0>;
-            bindings = <&bt BT_SEL 0>, <&to 0>,  <&tog L_MAC>;      /* ベースを default に */
+            wait-ms = <0>;
+            tap-ms = <0>;
+            bindings = <&bt BT_SEL 0 &to 0 &tog L_MAC>;      /* ベースを default に */
         };
-        to_ios: to_ios  { 
+
+        to_ios: to_ios {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-            wait-ms = <0>; tap-ms = <0>;
-            bindings = <&bt BT_SEL 1>, <&to 0>, <&tog L_IOS>;
+            wait-ms = <0>;
+            tap-ms = <0>;
+            bindings = <&bt BT_SEL 1 &to 0 &tog L_IOS>;
         };
-        to_andr: to_andr{
+
+        to_andr: to_andr {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-            wait-ms = <0>; tap-ms = <0>;
-            bindings = <&bt BT_SEL 2>, <&to 0>, <&tog L_ANDR>;
+            wait-ms = <0>;
+            tap-ms = <0>;
+            bindings = <&bt BT_SEL 2 &to 0 &tog L_ANDR>;
         };
     };
+
     behaviors {
         re_kp: sensor_rotate_kp {
             compatible = "zmk,behavior-sensor-rotate-var";
@@ -208,117 +222,221 @@
 
             tap-ms = <20>;
         };
+
         /* Layer-Tap を “Hold 優先” にする共通ビヘイビア */
+
         lt_hold: lt_hold {
-          compatible = "zmk,behavior-hold-tap";
-          #binding-cells = <2>;            /* 引数は <レイヤ番号, タップ時のキー> の2つ */
-          flavor = "hold-preferred";       /* ← これが要点：長押し判定を優先 */
-          tapping-term-ms = <180>;         /* 180〜220で微調整 */
-          quick-tap-ms = <0>;
-          bindings = <&mo>, <&kp>;         /* Hold=レイヤ（&mo）、Tap=キー（&kp） */
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;            /* 引数は <レイヤ番号, タップ時のキー> の2つ */
+            flavor = "hold-preferred";       /* ← これが要点：長押し判定を優先 */
+            tapping-term-ms = <180>;         /* 180〜220で微調整 */
+            quick-tap-ms = <0>;
+            bindings = <&mo>, <&kp>;
+         /* Hold=レイヤ（&mo）、Tap=キー（&kp） */
         };
-         /* ===== 2) Mod‑Morph：修飾キー検知で置換 ===== */
-         /* --- iOS: Ctrl系/Meta系をiOSが理解するCmd/Opt系列に変換 --- */
-         c_a_ios: c_a_ios {  // C-a = 行頭
-           compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>;
-           bindings = <&kp A>, <&kp LG(LEFT)>;     // Cmd+←
-           mods = <(MOD_LCTL|MOD_RCTL)>;
-         };
-         c_e_ios: c_e_ios { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>;bindings = <&kp E>, <&kp LG(RIGHT)>; mods = <(MOD_LCTL|MOD_RCTL)>; };
-         m_b_ios: m_b_ios { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>;bindings = <&kp B>, <&kp LA(LEFT)>;  mods = <(MOD_LALT|MOD_RALT)>; };
-         m_f_ios: m_f_ios { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>;bindings = <&kp F>, <&kp LA(RIGHT)>; mods = <(MOD_LALT|MOD_RALT)>; };
-         c_d_ios: c_d_ios { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>;bindings = <&kp D>, <&kp DELETE>;    mods = <(MOD_LCTL|MOD_RCTL)>; };
-         c_k_ios: c_k_ios { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>;bindings = <&kp K>, <&em_kill_eol_ios>; mods = <(MOD_LCTL|MOD_RCTL)>; };
-         m_d_ios: m_d_ios { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>;bindings = <&kp D>, <&em_del_word_fwd_ios>; mods = <(MOD_LALT|MOD_RALT)>; };
-         c_y_ios: c_y_ios { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>;bindings = <&kp Y>, <&kp LG(V)>;     mods = <(MOD_LCTL|MOD_RCTL)>; }; // Paste
-         c_w_ios: c_w_ios { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>;bindings = <&kp W>, <&kp LG(X)>;     mods = <(MOD_LCTL|MOD_RCTL)>; }; // Cut
-         m_w_ios: m_w_ios { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>;bindings = <&kp W>, <&kp LG(C)>;     mods = <(MOD_LALT|MOD_RALT)>; }; // Copy
-         c_sls_ios: c_sls_ios { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>;bindings = <&kp SLASH>, <&kp LG(Z)>; mods = <(MOD_LCTL|MOD_RCTL)>; }; // Undo
+
+        /* ===== 2) Mod‑Morph：修飾キー検知で置換 ===== */
+        /* --- iOS: Ctrl系/Meta系をiOSが理解するCmd/Opt系列に変換 --- */
+
+        c_a_ios: c_a_ios {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp A>, <&kp LG(LEFT)>;
+     // Cmd+←
+            mods = <(MOD_LCTL|MOD_RCTL)>;
+        };
+
+        c_e_ios: c_e_ios {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp E>, <&kp LG(RIGHT)>;
+
+            mods = <(MOD_LCTL|MOD_RCTL)>;
+        };
+
+        m_b_ios: m_b_ios {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp B>, <&kp LA(LEFT)>;
+
+            mods = <(MOD_LALT|MOD_RALT)>;
+        };
+
+        m_f_ios: m_f_ios {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp F>, <&kp LA(RIGHT)>;
+
+            mods = <(MOD_LALT|MOD_RALT)>;
+        };
+
+        c_d_ios: c_d_ios {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp D>, <&kp DELETE>;
+
+            mods = <(MOD_LCTL|MOD_RCTL)>;
+        };
+
+        c_k_ios: c_k_ios {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp K>, <&em_kill_eol_ios>;
+
+            mods = <(MOD_LCTL|MOD_RCTL)>;
+        };
+
+        m_d_ios: m_d_ios {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp D>, <&em_del_word_fwd_ios>;
+
+            mods = <(MOD_LALT|MOD_RALT)>;
+        };
+
+        c_y_ios: c_y_ios {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp Y>, <&kp LG(V)>;
+
+            mods = <(MOD_LCTL|MOD_RCTL)>;
+        }; // Paste
+        c_w_ios: c_w_ios {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp W>, <&kp LG(X)>;
+
+            mods = <(MOD_LCTL|MOD_RCTL)>;
+        }; // Cut
+        m_w_ios: m_w_ios {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp W>, <&kp LG(C)>;
+
+            mods = <(MOD_LALT|MOD_RALT)>;
+        }; // Copy
+        c_sls_ios: c_sls_ios {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp SLASH>, <&kp LG(Z)>;
+
+            mods = <(MOD_LCTL|MOD_RCTL)>;
+        }; // Undo
         /* === 共通: Ctrl+M → Enter === */
+
         c_m_enter: c_m_enter {
-          compatible = "zmk,behavior-mod-morph";
-          #binding-cells = <0>;
-          mods = <(MOD_LCTL|MOD_RCTL)>;
-          bindings = <&kp M>, <&kp ENTER>;
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            mods = <(MOD_LCTL|MOD_RCTL)>;
+            bindings = <&kp M>, <&kp ENTER>;
         };
+
         /* === ついでに: Ctrl+P → ↑ （上一行）=== */
+
         c_p_up: c_p_up {
-          compatible = "zmk,behavior-mod-morph";
-          #binding-cells = <0>;
-          mods = <(MOD_LCTL|MOD_RCTL)>;
-          bindings = <&kp P>, <&kp UP_ARROW>;
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            mods = <(MOD_LCTL|MOD_RCTL)>;
+            bindings = <&kp P>, <&kp UP_ARROW>;
         };
+
         c_f_right: c_f_andr {
-          compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>;
-          mods = <(MOD_LCTL|MOD_RCTL)>;
-          bindings = <&kp F>, <&kp RIGHT_ARROW>;  // Ctrl+F -> →
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            mods = <(MOD_LCTL|MOD_RCTL)>;
+            bindings = <&kp F>, <&kp RIGHT_ARROW>;
+  // Ctrl+F -> →
         };
+
         c_b_left: c_b_andr {
-          compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>;
-          mods = <(MOD_LCTL|MOD_RCTL)>;
-          bindings = <&kp B>, <&kp LEFT_ARROW>;   // Ctrl+B -> ←
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            mods = <(MOD_LCTL|MOD_RCTL)>;
+            bindings = <&kp B>, <&kp LEFT_ARROW>;
+   // Ctrl+B -> ←
         };
+
         c_n_down: c_n_andr {
-          compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>;
-          mods = <(MOD_LCTL|MOD_RCTL)>;
-          bindings = <&kp N>, <&kp DOWN_ARROW>;  /* Ctrl+N → 下一行 */
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            mods = <(MOD_LCTL|MOD_RCTL)>;
+            bindings = <&kp N>, <&kp DOWN_ARROW>;
+  /* Ctrl+N → 下一行 */
         };
 
         /* ===== Android: Emacs → Windows/Linux 風へ ===== */
-        c_a_andr: c_a_andr {  // C-a: 行頭
-          compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>;
-          bindings = <&kp A>, <&kp HOME>;
-          mods = <(MOD_LCTL|MOD_RCTL)>;
+
+        c_a_andr: c_a_andr {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp A>, <&kp HOME>;
+
+            mods = <(MOD_LCTL|MOD_RCTL)>;
         };
-        
-        c_e_andr: c_e_andr {  // C-e: 行末
-          compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>;
-          bindings = <&kp E>, <&kp END>;
-          mods = <(MOD_LCTL|MOD_RCTL)>;
-        }; 
+
+        c_e_andr: c_e_andr {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp E>, <&kp END>;
+
+            mods = <(MOD_LCTL|MOD_RCTL)>;
+        };
 
         c_h_andr: c_h_andr {
-          compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>;
-          mods = <(MOD_LCTL|MOD_RCTL)>;
-          bindings = <&kp H>, <&kp BACKSPACE>;   /* Ctrl+H → 後退(Backspace) */
-        };
-        
-        c_d_andr: c_d_andr {  // C-d: 削除
-          compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>;
-          bindings = <&kp D>, <&kp DELETE>;
-          mods = <(MOD_LCTL|MOD_RCTL)>;
-        };
-        
-        c_k_andr: c_k_andr {  // C-k: 行末まで kill
-          compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>;
-          bindings = <&kp K>, <&andr_kill_eol>;  // 必要なら andr_kill_eol_alt に切替
-          mods = <(MOD_LCTL|MOD_RCTL)>;
-        };
-        
-        c_y_andr: c_y_andr {  // C-y: 貼り付け
-          compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>;
-          bindings = <&kp Y>, <&kp LC(V)>;
-          mods = <(MOD_LCTL|MOD_RCTL)>;
-        };
-        
-        c_w_andr: c_w_andr {  // C-w: 切り取り
-          compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>;
-          bindings = <&kp W>, <&kp LC(X)>;
-          mods = <(MOD_LCTL|MOD_RCTL)>;
-        };
-        
-        m_w_andr: m_w_andr {  // M-w: コピー
-          compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>;
-          bindings = <&kp W>, <&kp LC(C)>;
-          mods = <(MOD_LALT|MOD_RALT)>;
-        };
-        
-        c_sls_andr: c_sls_andr {  // C-/: Undo
-          compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>;
-          bindings = <&kp SLASH>, <&kp LC(Z)>;
-          mods = <(MOD_LCTL|MOD_RCTL)>;
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            mods = <(MOD_LCTL|MOD_RCTL)>;
+            bindings = <&kp H>, <&kp BACKSPACE>;
+   /* Ctrl+H → 後退(Backspace) */
         };
 
+        c_d_andr: c_d_andr {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp D>, <&kp DELETE>;
+
+            mods = <(MOD_LCTL|MOD_RCTL)>;
+        };
+
+        c_k_andr: c_k_andr {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp K>, <&andr_kill_eol>;
+  // 必要なら andr_kill_eol_alt に切替
+            mods = <(MOD_LCTL|MOD_RCTL)>;
+        };
+
+        c_y_andr: c_y_andr {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp Y>, <&kp LC(V)>;
+
+            mods = <(MOD_LCTL|MOD_RCTL)>;
+        };
+
+        c_w_andr: c_w_andr {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp W>, <&kp LC(X)>;
+
+            mods = <(MOD_LCTL|MOD_RCTL)>;
+        };
+
+        m_w_andr: m_w_andr {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp W>, <&kp LC(C)>;
+
+            mods = <(MOD_LALT|MOD_RALT)>;
+        };
+
+        c_sls_andr: c_sls_andr {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp SLASH>, <&kp LC(Z)>;
+
+            mods = <(MOD_LCTL|MOD_RCTL)>;
+        };
     };
 
     keymap {
@@ -326,65 +444,67 @@
 
         default_layer {
             bindings = <
-                &kp Q               &kp W           &kp E         &kp R  &kp T                                         &kp Y        &kp U  &kp I               &kp O              &kp P
-                &kp A               &kp S           &kp D         &kp F  &kp G                                         &kp H        &kp J  &kp K               &kp L              &kp SEMI
-                &kp Z               &kp X           &kp C         &kp V  &kp B                                         &kp N        &kp M  &kp COMMA           &kp DOT            &mt RIGHT_SHIFT SLASH
-                // &mt LEFT_SHIFT TAB  &lt_hold 4 LEFT_ALT  &lt_hold 3 ESCAPE  &none  &kp LEFT_GUI  &mt LCTRL SPACE    &lt_hold 2 SPACE  &lt_hold 5 ENTER         &lt_hold 6 LEFT_BRACKET  &kp RIGHT_BRACKET  &kp SINGLE_QUOTE
-                &mt LEFT_SHIFT TAB  &lt_hold FUNCTION LEFT_ALT  &lt_hold CURSOR ESCAPE  &none  &kp LEFT_GUI  &mt LCTRL SPACE    &lt_hold MARK SPACE  &lt_hold SCROLL ENTER         &lt_hold WIRELESS LEFT_BRACKET  &kp RIGHT_BRACKET  &kp SINGLE_QUOTE
+&kp Q               &kp W                       &kp E                   &kp R  &kp T                                                 &kp Y                  &kp U  &kp I                           &kp O              &kp P
+&kp A               &kp S                       &kp D                   &kp F  &kp G                                                 &kp H                  &kp J  &kp K                           &kp L              &kp SEMI
+&mt LEFT_SHIFT Z    &kp X                       &kp C                   &kp V  &kp B                                                 &kp N                  &kp M  &kp COMMA                       &kp DOT            &mt RIGHT_SHIFT SLASH
+&mt LEFT_SHIFT TAB  &lt_hold FUNCTION LEFT_ALT  &lt_hold CURSOR ESCAPE  &none  &kp LEFT_GUI  &mt LCTRL SPACE    &lt_hold MARK SPACE  &lt_hold SCROLL ENTER         &lt_hold WIRELESS LEFT_BRACKET  &kp RIGHT_BRACKET  &kp SINGLE_QUOTE
             >;
 
             sensor-bindings = <&mouse_scrl SCRL_DOWN SCRL_UP>;
         };
 
-          ios_layer {
+        ios_layer {
             // L_IOS = 1
+
             bindings = <
-                &trans  &trans  &c_e_ios  &trans  &trans                         &trans  &trans  &trans      &trans  &trans
-                &c_a_ios &trans  &c_d_ios  &trans  &trans                         &trans  &trans  &c_k_ios    &trans  &trans
-                &trans  &trans  &trans     &trans  &trans                         &trans  &c_m_enter  &trans      &trans  &trans
-                &trans  &trans  &trans     &trans  &trans    &trans    &trans     &trans            &trans     &trans  &c_sls_ios
+&trans    &trans  &c_e_ios  &trans  &trans                    &trans  &trans      &trans    &trans  &trans
+&c_a_ios  &trans  &c_d_ios  &trans  &trans                    &trans  &trans      &c_k_ios  &trans  &trans
+&trans    &trans  &trans    &trans  &trans                    &trans  &c_m_enter  &trans    &trans  &trans
+&trans    &trans  &trans    &trans  &trans  &trans    &trans  &trans              &trans    &trans  &c_sls_ios
             >;
-          };
-        
-          android_layer {
+        };
+
+        android_layer {
             // L_ANDR = 2
+
             bindings = <
-                &trans  &c_w_andr  &c_e_andr  &trans  &trans                     &c_y_andr  &trans  &trans       &trans  &c_p_up
-                &c_a_andr  &trans  &c_d_andr  &c_f_right  &trans                   &c_h_andr  &trans  &c_k_andr    &trans  &trans/* ← c_d_andr を m_d_andr に変更 */
-                &trans  &trans  &trans      &trans  &c_b_left                    &c_n_down  &c_m_enter  &trans       &trans  &trans
-                &trans  &trans  &trans      &trans  &trans    &trans  &trans  &trans          &trans       &trans  &c_sls_andr
+&trans     &c_w_andr  &c_e_andr  &trans      &trans                       &c_y_andr  &trans      &trans     &trans  &c_p_up
+&c_a_andr  &trans     &c_d_andr  &c_f_right  &trans                       &c_h_andr  &trans      &c_k_andr  &trans  &trans
+&trans     &trans     &trans     &trans      &c_b_left                    &c_n_down  &c_m_enter  &trans     &trans  &trans
+&trans     &trans     &trans     &trans      &trans     &trans    &trans  &trans                 &trans     &trans  &c_sls_andr
             >;
-          };
-        
-          mac_layer {
+        };
+
+        mac_layer {
             // L_MAC = 3（基本は素通し・必要なら C-k だけ補助）
+
             bindings = <
-                &trans &trans &trans &trans &trans                              &trans &trans &trans &trans &trans
-                &trans &trans &trans &trans &trans                              &trans &trans &trans &trans &trans
-                &trans &trans &trans &trans &trans                              &trans &c_m_enter &trans &trans &trans
-                &trans &trans &trans        &trans &trans       &trans &trans &trans         &trans &trans &trans
+&trans  &trans  &trans  &trans  &trans                    &trans  &trans      &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans                    &trans  &trans      &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans                    &trans  &c_m_enter  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans              &trans  &trans  &trans
             >;
-          };
-
-
+        };
 
         mouse_layer {
             // MOUSE = 4
+
             bindings = <
-                &trans  &trans  &trans  &trans  &trans                    &trans  &trans    &none   &trans  &trans
-                &trans  &trans  &trans  &trans  &trans                    &trans  &mkp MB1  &none   &none   &trans
-                &trans  &trans  &trans  &trans  &trans                    &trans  &none     &none   &none   &trans
-                &trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans            &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans                    &trans  &trans    &none   &trans  &trans
+&trans  &trans  &trans  &trans  &trans                    &trans  &mkp MB1  &none   &none   &trans
+&trans  &trans  &trans  &trans  &trans                    &trans  &none     &none   &none   &trans
+&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans            &trans  &trans  &trans
             >;
         };
 
         mark_layer {
             // MARK = 5
+
             bindings = <
-                &kp EXCLAMATION             &kp DOUBLE_QUOTES  &kp HASH         &kp DOLLAR     &kp PERCENT                      &kp AMPERSAND  &kp SINGLE_QUOTE  &kp MINUS              &kp TILDE             &kp INT_YEN
-                &kp SLASH                   &kp NUMBER_4       &kp DELETE       &kp SEMICOLON  &kp SEMICOLON                    &kp BACKSPACE  &kp PLUS          &kp ASTERISK           &kp AT_SIGN           &kp EQUAL
-                &mt LEFT_SHIFT NUMBER_0     &kp NUMBER_1       &kp NUMBER_2     &kp APOSTROPHE &kp SQT                          &kp KP_EQUAL   &kp INT3          &kp LS(RIGHT_BRACKET)  &kp QUESTION          &kp UNDERSCORE
-                &trans                      &trans             &trans           &trans         &trans         &trans    &trans  &trans                           &kp ASTERISK           &kp LEFT_PARENTHESIS  &kp LS(QUESTION)
+&kp EXCLAMATION          &kp DOUBLE_QUOTES  &kp HASH      &kp DOLLAR      &kp PERCENT                      &kp AMPERSAND  &kp SINGLE_QUOTE  &kp MINUS              &kp TILDE             &kp INT_YEN
+&kp SLASH                &kp NUMBER_4       &kp DELETE    &kp SEMICOLON   &kp SEMICOLON                    &kp BACKSPACE  &kp PLUS          &kp ASTERISK           &kp AT_SIGN           &kp EQUAL
+&mt LEFT_SHIFT NUMBER_0  &kp NUMBER_1       &kp NUMBER_2  &kp APOSTROPHE  &kp SQT                          &kp KP_EQUAL   &kp INT3          &kp LS(RIGHT_BRACKET)  &kp QUESTION          &kp UNDERSCORE
+&trans                   &trans             &trans        &trans          &trans         &trans    &trans  &trans                           &kp ASTERISK           &kp LEFT_PARENTHESIS  &kp LS(QUESTION)
             >;
 
             sensor-bindings = <&re_kp C_VOLUME_DOWN C_VOLUME_UP>;
@@ -392,11 +512,12 @@
 
         cursor_layer {
             // CURSOR = 6
+
             bindings = <
-                &trans    &kp LC(LG(LEFT_ARROW))  &kp UP_ARROW  &kp LC(LG(RIGHT_ARROW))  &trans                   &kp KP_MULTIPLY  &kp NUMBER_7  &kp NUMBER_8  &kp NUMBER_9  &kp KP_PLUS
-                &trans    &kp LEFT_ARROW          &kp DOWN      &kp RIGHT_ARROW          &trans                   &kp KP_SLASH     &kp NUMBER_4  &kp NUMBER_5  &kp NUMBER_6  &kp KP_MINUS
-                &kp HOME  &kp PAGE_DOWN           &kp END       &kp PAGE_UP              &trans                   &kp UNDERSCORE   &kp NUMBER_1  &kp NUMBER_2  &kp NUMBER_3  &kp ENTER
-                &trans    &trans                  &trans        &trans                   &trans  &trans    &none  &kp NUMBER_0                   &kp DOT       &kp ENTER     &kp QUESTION
+&trans    &kp LC(LG(LEFT_ARROW))  &kp UP_ARROW  &kp LC(LG(RIGHT_ARROW))  &trans                   &kp KP_MULTIPLY  &kp NUMBER_7  &kp NUMBER_8  &kp NUMBER_9  &kp KP_PLUS
+&trans    &kp LEFT_ARROW          &kp DOWN      &kp RIGHT_ARROW          &trans                   &kp KP_SLASH     &kp NUMBER_4  &kp NUMBER_5  &kp NUMBER_6  &kp KP_MINUS
+&kp HOME  &kp PAGE_DOWN           &kp END       &kp PAGE_UP              &trans                   &kp UNDERSCORE   &kp NUMBER_1  &kp NUMBER_2  &kp NUMBER_3  &kp ENTER
+&trans    &trans                  &trans        &trans                   &trans  &trans    &none  &kp NUMBER_0                   &kp DOT       &kp ENTER     &kp QUESTION
             >;
 
             sensor-bindings = <&inc_dec_kp 0 0>;
@@ -404,11 +525,12 @@
 
         function_layer {
             // FUNCTION = 7
+
             bindings = <
-                &kp F1  &kp F2  &kp F3  &kp F4   &kp F5                     &kp LC(LG(NUMBER_1))  &kp LC(LG(NUMBER_2))  &kp LG(LC(NUMBER_3))    &kp NUMBER_0        &kp LC(LA(DELETE))
-                &kp F6  &kp F7  &kp F8  &kp F9   &kp F10                    &kp LC(LG(NUMBER_4))  &kp LG(LC(NUMBER_5))  &kp LC(LG(NUMBER_6))    &trans              &kp LC(LS(ESCAPE))
-                &trans  &trans  &trans  &kp F11  &kp F12                    &kp LC(LG(NUMBER_7))  &kp LG(LEFT_ARROW)    &kp LG(RIGHT_ARROW)     &kp LG(UP_ARROW)    &kp LC(LA(INS))
-                &trans  &trans  &trans  &trans   &trans   &trans    &trans  &trans                                      &kp LG(LC(LEFT_ARROW))  &kp LG(DOWN_ARROW)  &kp LG(LC(RIGHT_ARROW))
+&kp F1  &kp F2  &kp F3  &kp F4   &kp F5                     &kp LC(LG(NUMBER_1))  &kp LC(LG(NUMBER_2))  &kp LG(LC(NUMBER_3))    &kp NUMBER_0        &kp LC(LA(DELETE))
+&kp F6  &kp F7  &kp F8  &kp F9   &kp F10                    &kp LC(LG(NUMBER_4))  &kp LG(LC(NUMBER_5))  &kp LC(LG(NUMBER_6))    &trans              &kp LC(LS(ESCAPE))
+&trans  &trans  &trans  &kp F11  &kp F12                    &kp LC(LG(NUMBER_7))  &kp LG(LEFT_ARROW)    &kp LG(RIGHT_ARROW)     &kp LG(UP_ARROW)    &kp LC(LA(INS))
+&trans  &trans  &trans  &trans   &trans   &trans    &trans  &trans                                      &kp LG(LC(LEFT_ARROW))  &kp LG(DOWN_ARROW)  &kp LG(LC(RIGHT_ARROW))
             >;
 
             sensor-bindings = <&mouse_scrl SCRL_DOWN SCRL_UP>;
@@ -416,11 +538,12 @@
 
         scroll_layer {
             // SCROLL = 8
+
             bindings = <
-                &trans    &kp LC(LG(LEFT_ARROW))  &kp UP_ARROW  &kp LC(LG(RIGHT_ARROW))  &trans                    &kp KP_MULTIPLY  &kp NUMBER_1  &kp NUMBER_2  &kp NUMBER_3  &kp KP_PLUS
-                &trans    &kp LEFT_ARROW          &kp DOWN      &kp RIGHT_ARROW          &trans                    &kp KP_SLASH     &kp NUMBER_4  &kp NUMBER_5  &kp NUMBER_6  &kp KP_MINUS
-                &kp HOME  &kp PAGE_DOWN           &kp END       &kp PAGE_UP              &trans                    &kp NUMBER_0     &kp NUMBER_7  &kp NUMBER_8  &kp NUMBER_9  &kp ENTER
-                &trans    &trans                  &trans        &trans                   &trans  &trans    &trans  &kp NUMBER_0                   &kp UNDERSCORE  &kp DOT       &kp QUESTION
+&trans    &kp LC(LG(LEFT_ARROW))  &kp UP_ARROW  &kp LC(LG(RIGHT_ARROW))  &trans                    &kp KP_MULTIPLY  &kp NUMBER_1  &kp NUMBER_2    &kp NUMBER_3  &kp KP_PLUS
+&trans    &kp LEFT_ARROW          &kp DOWN      &kp RIGHT_ARROW          &trans                    &kp KP_SLASH     &kp NUMBER_4  &kp NUMBER_5    &kp NUMBER_6  &kp KP_MINUS
+&kp HOME  &kp PAGE_DOWN           &kp END       &kp PAGE_UP              &trans                    &kp NUMBER_0     &kp NUMBER_7  &kp NUMBER_8    &kp NUMBER_9  &kp ENTER
+&trans    &trans                  &trans        &trans                   &trans  &trans    &trans  &kp NUMBER_0                   &kp UNDERSCORE  &kp DOT       &kp QUESTION
             >;
 
             sensor-bindings = <&inc_dec_kp DOWN_ARROW UP_ARROW>;
@@ -428,12 +551,12 @@
 
         wireless_layer {
             // WIRELESS = 9
+
             bindings = <
-                //&bt BT_SEL 0  &bt BT_SEL1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4                         &bt BT_SEL 0    &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4
-                &to_mac       &to_ios       &to_andr      &bt BT_SEL 3  &bt BT_SEL 4                         &to_mac         &to_ios       &to_andr      &bt BT_SEL 3  &bt BT_SEL 4
-                &trans        &trans        &trans        &trans        &trans                               &trans          &trans        &trans        &trans        &trans
-                &trans        &trans        &trans        &trans        &trans                               &trans          &trans        &trans        &trans        &bt BT_CLR
-                &trans        &trans        &trans        &trans        &trans        &trans    &bootloader  &studio_unlock                &trans        &trans        &bt BT_CLR_ALL
+&to_mac  &to_ios  &to_andr  &bt BT_SEL 3  &bt BT_SEL 4                         &to_mac         &to_ios  &to_andr  &bt BT_SEL 3  &bt BT_SEL 4
+&trans   &trans   &trans    &trans        &trans                               &trans          &trans   &trans    &trans        &trans
+&trans   &trans   &trans    &trans        &trans                               &trans          &trans   &trans    &trans        &bt BT_CLR
+&trans   &trans   &trans    &trans        &trans        &trans    &bootloader  &studio_unlock           &trans    &trans        &bt BT_CLR_ALL
             >;
 
             sensor-bindings = <&inc_dec_kp RIGHT_ARROW LEFT_ARROW>;
