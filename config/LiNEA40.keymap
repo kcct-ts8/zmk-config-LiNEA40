@@ -216,7 +216,7 @@
           tapping-term-ms = <180>;         /* 180〜220で微調整 */
           quick-tap-ms = <0>;
           bindings = <&mo>, <&kp>;         /* Hold=レイヤ（&mo）、Tap=キー（&kp） */
-        }
+        };
          /* ===== 2) Mod‑Morph：修飾キー検知で置換 ===== */
          /* --- iOS: Ctrl系/Meta系をiOSが理解するCmd/Opt系列に変換 --- */
          c_a_ios: c_a_ios {  // C-a = 行頭
